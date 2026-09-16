@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="aurora">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Dashboard & Live Clock</title>
+  <meta name="description" content="Personal ambient dashboard featuring dynamic greetings, customizable name, high-precision live digital clock, world timezones, and productivity tools.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Ambient background glow elements -->
+  <div class="aurora-container" aria-hidden="true">
+    <div class="aurora-orb orb-1"></div>
+    <div class="aurora-orb orb-2"></div>
+    <div class="aurora-orb orb-3"></div>
+    <div class="noise-overlay"></div>
+  </div>
+
+  <div class="app-layout">
+    <!-- Top Bar Navigation -->
+    <header class="top-nav">
+      <div class="brand-pill">
+        <span class="brand-dot"></span>
+        <span class="brand-title">PERSONAL DASHBOARD</span>
+        <span class="badge live-badge">LIVE</span>
+      </div>
+
+      <div class="nav-controls">
+        <!-- Theme Switcher -->
+        <div class="theme-selector" role="group" aria-label="Color Theme">
+          <button class="theme-btn active" data-theme="aurora" title="Aurora Emerald">
+            <span class="theme-color-dot aurora-dot"></span>
+            <span class="theme-label">Aurora</span>
+          </button>
+          <button class="theme-btn" data-theme="cyber" title="Cyber Violet">
+            <span class="theme-color-dot cyber-dot"></span>
+            <span class="theme-label">Cyber</span>
+          </button>
+          <button class="theme-btn" data-theme="sunset" title="Sunset Coral">
+            <span class="theme-color-dot sunset-dot"></span>
+            <span class="theme-label">Sunset</span>
+          </button>
+        </div>
+
+        <!-- Fullscreen Button -->
+        <button id="fullscreenBtn" class="icon-btn" title="Toggle Fullscreen" aria-label="Toggle Fullscreen">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Bento Grid Content -->
+    <main class="bento-grid">
+
+      <!-- 1. Hero Identity & Greeting Card -->
+      <section class="card hero-card" id="identityCard">
+        <div class="card-glow"></div>
+        <div class="greeting-wrapper">
+          <div class="time-greeting-badge">
+            <span id="greetingIcon" class="greeting-icon">☀️</span>
+            <span id="greetingText">Good Morning</span>
+          </div>
+
+          <div class="status-dropdown-wrapper">
+            <button id="statusBtn" class="status-pill" title="Click to cycle status">
+              <span class="status-indicator"></span>
+              <span id="statusText">Deep Work</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="name-display-container">
+          <h1 class="welcome-heading">
+            <span class="salutation">Hello,</span>
+            <span id="userName" class="editable-name" contenteditable="true" spellcheck="false" title="Click to edit your name" role="textbox" aria-label="Your Name">Alex Morgan</span>
+            <span class="waving-hand" aria-hidden="true">👋</span>
+          </h1>
+          <div class="edit-hint-tooltip" id="nameHint">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+            <span>Click name to edit & save</span>
+          </div>
+        </div>
+
+        <p class="tagline" id="personalTagline" contenteditable="true" spellcheck="false" title="Click to customize tagline">Welcome back to your workspace. Make every moment count today.</p>
+
+        <!-- Date & Day Progress Strip -->
+        <div class="date-strip">
+          <div class="date-info">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span id="fullDateStr">Loading date...</span>
+          </div>
+          <div class="day-progress-wrapper" title="Day Progress">
+            <div class="progress-bar-bg">
+              <div id="dayProgressBar" class="progress-bar-fill" style="width: 0%;"></div>
+            </div>
+            <span id="dayProgressPercent" class="progress-percent">0%</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Master Live Digital Clock Card -->
+      <section class="card clock-card" id="masterClockCard">
+        <div class="card-glow"></div>
+        <div class="clock-card-header">
+          <div class="clock-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>LOCAL TIME</span>
+          </div>
+          <div class="clock-actions">
+            <button id="formatToggleBtn" class="pill-toggle" title="Switch 12h / 24h format">
+              <span id="formatLabel">24H</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Master Digital Clock Display -->
+        <div class="digital-clock-display" aria-live="off">
+          <div class="time-digits">
+            <span id="clockHours" class="digit-unit">00</span>
+            <span class="digit-separator">:</span>
+            <span id="clockMinutes" class="digit-unit">00</span>
+            <span class="digit-separator">:</span>
+            <span id="clockSeconds" class="digit-unit digit-seconds">00</span>
+          </div>
+          <div class="meridiem-wrapper" id="meridiemWrapper">
+            <span id="clockMeridiem" class="meridiem-badge">AM</span>
+          </div>
+        </div>
+
+        <!-- Seconds Live Progress Bar -->
+        <div class="seconds-track-container" title="Current minute elapsed seconds">
+          <div id="secondsTrackBar" class="seconds-track-fill" style="width: 0%;"></div>
+        </div>
+
+        <!-- Timezone & System Stats -->
+        <div class="clock-footer-meta">
+          <div class="meta-item">
+            <span class="meta-label">Timezone:</span>
+            <span id="timezoneStr" class="meta-value">Detecting...</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Offset:</span>
+            <span id="utcOffsetStr" class="meta-value">UTC</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Week:</span>
+            <span id="weekNumStr" class="meta-value">W00</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. World Timezones Card -->
+      <section class="card world-clocks-card">
+        <div class="card-glow"></div>
+        <div class="card-title-row">
+          <div class="card-heading">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <span>WORLD CLOCKS</span>
+          </div>
+          <span class="card-sub-tag">Global Hub</span>
+        </div>
+
+        <div class="world-clocks-list">
+          <div class="world-clock-item" data-tz="Asia/Tokyo">
+            <div class="city-info">
+              <span class="city-flag">🇯🇵</span>
+              <div>
+                <div class="city-name">Tokyo</div>
+                <div class="city-tz">JST (UTC+9)</div>
+              </div>
+            </div>
+            <div class="city-time-val" id="timeTokyo">--:--</div>
+          </div>
+
+          <div class="world-clock-item" data-tz="Europe/London">
+            <div class="city-info">
+              <span class="city-flag">🇬🇧</span>
+              <div>
+                <div class="city-name">London</div>
+                <div class="city-tz">GMT / BST</div>
+              </div>
+            </div>
+            <div class="city-time-val" id="timeLondon">--:--</div>
+          </div>
+
+          <div class="world-clock-item" data-tz="America/New_York">
+            <div class="city-info">
+              <span class="city-flag">🇺🇸</span>
+              <div>
+                <div class="city-name">New York</div>
+                <div class="city-tz">EDT (UTC-4)</div>
+              </div>
+            </div>
+            <div class="city-time-val" id="timeNewYork">--:--</div>
+          </div>
+
+          <div class="world-clock-item" data-tz="UTC">
+            <div class="city-info">
+              <span class="city-flag">🌐</span>
+              <div>
+                <div class="city-name">UTC Universal</div>
+                <div class="city-tz">Standard Time</div>
+              </div>
+            </div>
+            <div class="city-time-val" id="timeUTC">--:--</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Focus & Pomodoro Timer Widget -->
+      <section class="card timer-card">
+        <div class="card-glow"></div>
+        <div class="card-title-row">
+          <div class="card-heading">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span>FOCUS TIMER</span>
+          </div>
+          <div class="timer-mode-pills">
+            <button class="timer-mode-btn active" data-minutes="25">25m</button>
+            <button class="timer-mode-btn" data-minutes="5">5m</button>
+            <button class="timer-mode-btn" data-minutes="15">15m</button>
+          </div>
+        </div>
+
+        <div class="timer-display-area">
+          <div class="timer-countdown" id="timerDigits">25:00</div>
+          <div class="timer-status-text" id="timerStatusLabel">Ready to focus</div>
+        </div>
+
+        <div class="timer-controls">
+          <button id="timerToggleBtn" class="btn btn-primary" aria-label="Start Timer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span id="timerBtnText">Start Focus</span>
+          </button>
+          <button id="timerResetBtn" class="btn btn-secondary" aria-label="Reset Timer" title="Reset">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- 5. Daily Motto / Thought Card -->
+      <section class="card quote-card">
+        <div class="card-glow"></div>
+        <div class="card-title-row">
+          <div class="card-heading">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <span>DAILY SPARK</span>
+          </div>
+          <button id="refreshQuoteBtn" class="icon-tiny-btn" title="New inspiration" aria-label="New Quote">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          </button>
+        </div>
+        <blockquote class="quote-text" id="dailyQuote">
+          "Time is what we want most, but what we use worst."
+        </blockquote>
+        <div class="quote-author" id="quoteAuthor">— William Penn</div>
+      </section>
+
+      <!-- 6. Quick Launch Dock -->
+      <section class="card quicklinks-card">
+        <div class="card-glow"></div>
+        <div class="card-title-row">
+          <div class="card-heading">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span>QUICK ACCESS</span>
+          </div>
+          <span class="card-sub-tag">Shortcuts</span>
+        </div>
+
+        <div class="quicklinks-grid">
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="quick-tile" title="GitHub">
+            <div class="tile-icon github-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            </div>
+            <span class="tile-title">GitHub</span>
+          </a>
+
+          <a href="https://x.com" target="_blank" rel="noopener noreferrer" class="quick-tile" title="X (Twitter)">
+            <div class="tile-icon x-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </div>
+            <span class="tile-title">X / Social</span>
+          </a>
+
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="quick-tile" title="LinkedIn">
+            <div class="tile-icon linkedin-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.64 1.64 0 0 0 1.64-1.64A1.64 1.64 0 0 0 6.46 5.5a1.64 1.64 0 0 0-1.64 1.62c0 .91.73 1.64 1.64 1.64m1.39 9.74v-8.37H5.07v8.37h2.78z"/></svg>
+            </div>
+            <span class="tile-title">LinkedIn</span>
+          </a>
+
+          <a href="mailto:" class="quick-tile" title="Send Email">
+            <div class="tile-icon mail-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <span class="tile-title">Email</span>
+          </a>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer Status Bar -->
+    <footer class="bottom-bar">
+      <div class="footer-left">
+        <span class="pulse-indicator"></span>
+        <span id="syncStatus">Live Hardware Precision Clock</span>
+      </div>
+      <div class="footer-center">
+        <span>Designed for Flow & Focus</span>
+      </div>
+      <div class="footer-right">
+        <span class="storage-indicator">💾 Settings Saved Locally</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

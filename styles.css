@@ -1,0 +1,1114 @@
+/* ==========================================================================
+   PERSONAL DASHBOARD & LIVE CLOCK DESIGN SYSTEM
+   Theme: Luxury Ambient Glassmorphism
+   ========================================================================== */
+
+:root {
+  /* Fonts */
+  --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Transitions */
+  --transition-fast: 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 30px;
+  --radius-pill: 9999px;
+}
+
+/* --------------------------------------------------------------------------
+   Themes
+   -------------------------------------------------------------------------- */
+[data-theme="aurora"] {
+  --bg-base: #080a0f;
+  --card-bg: rgba(15, 20, 32, 0.65);
+  --card-bg-hover: rgba(20, 28, 45, 0.78);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-border-hover: rgba(52, 211, 153, 0.35);
+
+  --accent-primary: #10b981;
+  --accent-secondary: #06b6d4;
+  --accent-gradient: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #6366f1 100%);
+  --accent-glow: rgba(16, 185, 129, 0.28);
+  --accent-light: rgba(16, 185, 129, 0.12);
+
+  --orb-1: rgba(16, 185, 129, 0.22);
+  --orb-2: rgba(6, 182, 212, 0.22);
+  --orb-3: rgba(99, 102, 241, 0.2);
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --clock-shadow: 0 0 35px rgba(16, 185, 129, 0.35);
+}
+
+[data-theme="cyber"] {
+  --bg-base: #07040d;
+  --card-bg: rgba(24, 15, 42, 0.65);
+  --card-bg-hover: rgba(35, 22, 60, 0.78);
+  --card-border: rgba(255, 255, 255, 0.09);
+  --card-border-hover: rgba(168, 85, 247, 0.45);
+
+  --accent-primary: #a855f7;
+  --accent-secondary: #ec4899;
+  --accent-gradient: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #3b82f6 100%);
+  --accent-glow: rgba(168, 85, 247, 0.32);
+  --accent-light: rgba(168, 85, 247, 0.14);
+
+  --orb-1: rgba(168, 85, 247, 0.25);
+  --orb-2: rgba(236, 72, 153, 0.22);
+  --orb-3: rgba(59, 130, 246, 0.2);
+
+  --text-primary: #faf5ff;
+  --text-secondary: #c084fc;
+  --text-muted: #7e6f9b;
+  --clock-shadow: 0 0 35px rgba(168, 85, 247, 0.35);
+}
+
+[data-theme="sunset"] {
+  --bg-base: #0c0808;
+  --card-bg: rgba(32, 18, 20, 0.65);
+  --card-bg-hover: rgba(45, 25, 28, 0.78);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-border-hover: rgba(249, 115, 22, 0.4);
+
+  --accent-primary: #f97316;
+  --accent-secondary: #f43f5e;
+  --accent-gradient: linear-gradient(135deg, #f97316 0%, #f43f5e 50%, #eab308 100%);
+  --accent-glow: rgba(249, 115, 22, 0.32);
+  --accent-light: rgba(249, 115, 22, 0.14);
+
+  --orb-1: rgba(249, 115, 22, 0.25);
+  --orb-2: rgba(244, 63, 94, 0.22);
+  --orb-3: rgba(234, 179, 8, 0.18);
+
+  --text-primary: #fff7ed;
+  --text-secondary: #fb923c;
+  --text-muted: #8c685b;
+  --clock-shadow: 0 0 35px rgba(249, 115, 22, 0.35);
+}
+
+/* --------------------------------------------------------------------------
+   Reset & Base
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --------------------------------------------------------------------------
+   Aurora Ambient Backdrop
+   -------------------------------------------------------------------------- */
+.aurora-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.aurora-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(95px);
+  opacity: 0.85;
+  animation: floatOrb 22s infinite alternate ease-in-out;
+}
+
+.orb-1 {
+  width: 550px;
+  height: 550px;
+  top: -120px;
+  left: -80px;
+  background: var(--orb-1);
+}
+
+.orb-2 {
+  width: 600px;
+  height: 600px;
+  bottom: -150px;
+  right: -100px;
+  background: var(--orb-2);
+  animation-duration: 26s;
+  animation-direction: alternate-reverse;
+}
+
+.orb-3 {
+  width: 480px;
+  height: 480px;
+  top: 30%;
+  left: 45%;
+  background: var(--orb-3);
+  animation-duration: 30s;
+}
+
+@keyframes floatOrb {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(60px, 45px) scale(1.12); }
+  100% { transform: translate(-40px, -60px) scale(0.95); }
+}
+
+.noise-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 0);
+  background-size: 28px 28px;
+  opacity: 0.45;
+}
+
+/* --------------------------------------------------------------------------
+   Layout Structure
+   -------------------------------------------------------------------------- */
+.app-layout {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 24px 28px;
+  gap: 24px;
+}
+
+/* --------------------------------------------------------------------------
+   Top Bar Navigation
+   -------------------------------------------------------------------------- */
+.top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+}
+
+.brand-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  box-shadow: 0 0 10px var(--accent-primary);
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.6; }
+}
+
+.brand-title {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--text-secondary);
+}
+
+.badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.live-badge {
+  background: var(--accent-light);
+  color: var(--accent-primary);
+  border: 1px solid var(--accent-primary);
+}
+
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Theme Switcher */
+.theme-selector {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-pill);
+  padding: 3px;
+  gap: 2px;
+}
+
+.theme-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.theme-btn:hover {
+  color: var(--text-primary);
+}
+
+.theme-btn.active {
+  background: var(--card-bg-hover);
+  color: var(--text-primary);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.theme-color-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.aurora-dot { background: #10b981; }
+.cyber-dot { background: #a855f7; }
+.sunset-dot { background: #f97316; }
+
+.icon-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--card-border);
+  color: var(--text-secondary);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.icon-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--accent-primary);
+  background: var(--accent-light);
+  transform: scale(1.05);
+}
+
+/* --------------------------------------------------------------------------
+   Bento Grid Layout
+   -------------------------------------------------------------------------- */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 20px;
+  flex: 1;
+}
+
+/* Generic Glass Card */
+.card {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-xl);
+  padding: 28px;
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  box-shadow: 0 10px 35px -5px rgba(0, 0, 0, 0.35);
+  transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  border-color: var(--card-border-hover);
+  box-shadow: 0 16px 42px -8px rgba(0, 0, 0, 0.5), 0 0 24px -6px var(--accent-glow);
+  transform: translateY(-2px);
+}
+
+.card-glow {
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: var(--accent-glow);
+  filter: blur(60px);
+  pointer-events: none;
+  opacity: 0.5;
+  transition: opacity var(--transition-normal);
+}
+
+.card:hover .card-glow {
+  opacity: 0.9;
+}
+
+.card-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.card-heading {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+}
+
+.card-sub-tag {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+}
+
+/* --------------------------------------------------------------------------
+   1. Hero Card (Identity & Greeting)
+   -------------------------------------------------------------------------- */
+.hero-card {
+  grid-column: span 7;
+  justify-content: space-between;
+}
+
+.greeting-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.time-greeting-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent-light);
+  border: 1px solid var(--accent-primary);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+}
+
+.greeting-icon {
+  font-size: 1.1rem;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--card-border);
+  color: var(--text-secondary);
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.status-pill:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  border-color: var(--card-border-hover);
+}
+
+.status-indicator {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.name-display-container {
+  margin-bottom: 12px;
+}
+
+.welcome-heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.salutation {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.editable-name {
+  position: relative;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding: 2px 8px;
+  border-radius: var(--radius-md);
+  outline: none;
+  cursor: text;
+  transition: var(--transition-fast);
+  border-bottom: 2px dashed rgba(255, 255, 255, 0.2);
+}
+
+.editable-name:hover {
+  border-bottom-color: var(--accent-primary);
+}
+
+.editable-name:focus {
+  -webkit-text-fill-color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
+  border-bottom: 2px solid var(--accent-primary);
+  box-shadow: 0 0 16px var(--accent-glow);
+}
+
+.waving-hand {
+  display: inline-block;
+  animation: waveHand 2.2s infinite;
+  transform-origin: 70% 70%;
+  cursor: default;
+}
+
+@keyframes waveHand {
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(14deg); }
+  20% { transform: rotate(-8deg); }
+  30% { transform: rotate(14deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(10deg); }
+  60% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.edit-hint-tooltip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+  transition: opacity var(--transition-fast);
+}
+
+.tagline {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 580px;
+  margin-bottom: 24px;
+  line-height: 1.6;
+  outline: none;
+  cursor: text;
+  padding: 4px 6px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-fast);
+}
+
+.tagline:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.tagline:focus {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text-primary);
+}
+
+/* Date Strip */
+.date-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-lg);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.date-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.date-info svg {
+  color: var(--accent-primary);
+}
+
+.day-progress-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress-bar-bg {
+  width: 110px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--accent-gradient);
+  border-radius: var(--radius-pill);
+  transition: width 1s ease-in-out;
+}
+
+.progress-percent {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   2. Master Live Digital Clock Card
+   -------------------------------------------------------------------------- */
+.clock-card {
+  grid-column: span 5;
+  justify-content: space-between;
+}
+
+.clock-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.clock-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--text-secondary);
+}
+
+.clock-label svg {
+  color: var(--accent-primary);
+}
+
+.pill-toggle {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--card-border);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.pill-toggle:hover {
+  background: var(--accent-light);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+/* Digital Display */
+.digital-clock-display {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
+  margin: 12px 0 20px 0;
+}
+
+.time-digits {
+  font-family: var(--font-mono);
+  font-size: clamp(3rem, 5.2vw, 4.4rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  line-height: 1;
+  text-shadow: var(--clock-shadow);
+  display: flex;
+  align-items: baseline;
+}
+
+.digit-unit {
+  font-variant-numeric: tabular-nums;
+  display: inline-block;
+  min-width: 1.15ch;
+  text-align: center;
+}
+
+.digit-seconds {
+  color: var(--accent-primary);
+}
+
+.digit-separator {
+  color: var(--accent-primary);
+  opacity: 0.85;
+  animation: pulseSeparator 1s infinite ease-in-out;
+  padding: 0 4px;
+}
+
+@keyframes pulseSeparator {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 0.25; }
+}
+
+.meridiem-wrapper {
+  margin-left: 4px;
+}
+
+.meridiem-badge {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  background: var(--accent-light);
+  color: var(--accent-primary);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.05em;
+}
+
+/* Live Seconds Track */
+.seconds-track-container {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.seconds-track-fill {
+  height: 100%;
+  background: var(--accent-gradient);
+  border-radius: var(--radius-pill);
+  transition: width 0.15s linear;
+  box-shadow: 0 0 10px var(--accent-primary);
+}
+
+.clock-footer-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+}
+
+.meta-label {
+  color: var(--text-muted);
+}
+
+.meta-value {
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   3. World Clocks Card
+   -------------------------------------------------------------------------- */
+.world-clocks-card {
+  grid-column: span 4;
+}
+
+.world-clocks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.world-clock-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+  transition: var(--transition-fast);
+}
+
+.world-clock-item:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: var(--card-border-hover);
+  transform: translateX(4px);
+}
+
+.city-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.city-flag {
+  font-size: 1.35rem;
+}
+
+.city-name {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+}
+
+.city-tz {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.city-time-val {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--accent-primary);
+}
+
+/* --------------------------------------------------------------------------
+   4. Focus & Pomodoro Timer Widget
+   -------------------------------------------------------------------------- */
+.timer-card {
+  grid-column: span 4;
+}
+
+.timer-mode-pills {
+  display: flex;
+  gap: 6px;
+}
+
+.timer-mode-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--card-border);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.timer-mode-btn:hover {
+  color: var(--text-primary);
+}
+
+.timer-mode-btn.active {
+  background: var(--accent-light);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.timer-display-area {
+  text-align: center;
+  margin: 16px 0;
+  padding: 14px 0;
+}
+
+.timer-countdown {
+  font-family: var(--font-mono);
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 20px var(--accent-glow);
+}
+
+.timer-status-text {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.timer-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  border: none;
+}
+
+.btn-primary {
+  flex: 1;
+  background: var(--accent-gradient);
+  color: #ffffff;
+  box-shadow: 0 4px 14px var(--accent-glow);
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--card-border);
+  color: var(--text-secondary);
+  padding: 10px 14px;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   5. Daily Motto / Spark Card
+   -------------------------------------------------------------------------- */
+.quote-card {
+  grid-column: span 4;
+  justify-content: space-between;
+}
+
+.icon-tiny-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--card-border);
+  color: var(--text-muted);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.icon-tiny-btn:hover {
+  color: var(--text-primary);
+  transform: rotate(90deg);
+}
+
+.quote-text {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--text-primary);
+  font-style: italic;
+  margin: 10px 0 16px 0;
+  position: relative;
+}
+
+.quote-author {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-align: right;
+}
+
+/* --------------------------------------------------------------------------
+   6. Quick Launch Dock
+   -------------------------------------------------------------------------- */
+.quicklinks-card {
+  grid-column: span 12;
+}
+
+.quicklinks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.quick-tile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: var(--transition-fast);
+}
+
+.quick-tile:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px -4px var(--accent-glow);
+}
+
+.tile-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  transition: var(--transition-fast);
+}
+
+.quick-tile:hover .tile-icon {
+  background: var(--accent-gradient);
+  color: #fff;
+  transform: scale(1.08);
+}
+
+.tile-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Footer Status Bar
+   -------------------------------------------------------------------------- */
+.bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  backdrop-filter: blur(12px);
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pulse-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Breakpoints
+   -------------------------------------------------------------------------- */
+@media (max-width: 1080px) {
+  .hero-card {
+    grid-column: span 12;
+  }
+  .clock-card {
+    grid-column: span 12;
+  }
+  .world-clocks-card {
+    grid-column: span 6;
+  }
+  .timer-card {
+    grid-column: span 6;
+  }
+  .quote-card {
+    grid-column: span 12;
+  }
+}
+
+@media (max-width: 680px) {
+  .app-layout {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .world-clocks-card,
+  .timer-card,
+  .quote-card,
+  .quicklinks-card {
+    grid-column: span 12;
+  }
+
+  .top-nav {
+    flex-direction: column;
+    gap: 12px;
+    border-radius: var(--radius-lg);
+  }
+
+  .time-digits {
+    font-size: 2.8rem;
+  }
+
+  .welcome-heading {
+    font-size: 1.8rem;
+  }
+
+  .bottom-bar {
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+    border-radius: var(--radius-lg);
+  }
+}
