@@ -412,4 +412,30 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
+
+  // --------------------------------------------------------------------------
+  // 8. Navigation Active State on Scroll
+  // --------------------------------------------------------------------------
+  const navPills = document.querySelectorAll('.nav-pill');
+  const sections = document.querySelectorAll('section[id]');
+
+  window.addEventListener('scroll', () => {
+    let currentId = '';
+    const scrollPos = window.scrollY + 160;
+
+    sections.forEach(sec => {
+      const top = sec.offsetTop;
+      const height = sec.offsetHeight;
+      if (scrollPos >= top && scrollPos < top + height) {
+        currentId = sec.getAttribute('id');
+      }
+    });
+
+    if (currentId) {
+      navPills.forEach(pill => {
+        const href = pill.getAttribute('href').replace('#', '');
+        pill.classList.toggle('active', href === currentId);
+      });
+    }
+  });
 });

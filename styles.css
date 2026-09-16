@@ -1,6 +1,7 @@
 /* ==========================================================================
    PERSONAL DASHBOARD & LIVE CLOCK DESIGN SYSTEM
    Theme: Luxury Ambient Glassmorphism
+   Author: RAYWU
    ========================================================================== */
 
 :root {
@@ -17,8 +18,8 @@
   /* Radius */
   --radius-sm: 8px;
   --radius-md: 14px;
-  --radius-lg: 22px;
-  --radius-xl: 30px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
   --radius-pill: 9999px;
 }
 
@@ -27,10 +28,10 @@
    -------------------------------------------------------------------------- */
 [data-theme="aurora"] {
   --bg-base: #080a0f;
-  --card-bg: rgba(15, 20, 32, 0.65);
-  --card-bg-hover: rgba(20, 28, 45, 0.78);
+  --card-bg: rgba(15, 20, 32, 0.68);
+  --card-bg-hover: rgba(20, 28, 45, 0.82);
   --card-border: rgba(255, 255, 255, 0.08);
-  --card-border-hover: rgba(52, 211, 153, 0.35);
+  --card-border-hover: rgba(52, 211, 153, 0.4);
 
   --accent-primary: #10b981;
   --accent-secondary: #06b6d4;
@@ -50,8 +51,8 @@
 
 [data-theme="cyber"] {
   --bg-base: #07040d;
-  --card-bg: rgba(24, 15, 42, 0.65);
-  --card-bg-hover: rgba(35, 22, 60, 0.78);
+  --card-bg: rgba(24, 15, 42, 0.68);
+  --card-bg-hover: rgba(35, 22, 60, 0.82);
   --card-border: rgba(255, 255, 255, 0.09);
   --card-border-hover: rgba(168, 85, 247, 0.45);
 
@@ -73,10 +74,10 @@
 
 [data-theme="sunset"] {
   --bg-base: #0c0808;
-  --card-bg: rgba(32, 18, 20, 0.65);
-  --card-bg-hover: rgba(45, 25, 28, 0.78);
+  --card-bg: rgba(32, 18, 20, 0.68);
+  --card-bg-hover: rgba(45, 25, 28, 0.82);
   --card-border: rgba(255, 255, 255, 0.08);
-  --card-border-hover: rgba(249, 115, 22, 0.4);
+  --card-border-hover: rgba(249, 115, 22, 0.45);
 
   --accent-primary: #f97316;
   --accent-secondary: #f43f5e;
@@ -101,6 +102,10 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 html, body {
@@ -158,7 +163,7 @@ html, body {
 .orb-3 {
   width: 480px;
   height: 480px;
-  top: 30%;
+  top: 35%;
   left: 45%;
   background: var(--orb-3);
   animation-duration: 30s;
@@ -200,13 +205,16 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 18px;
+  padding: 10px 18px;
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--radius-pill);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+  position: sticky;
+  top: 16px;
+  z-index: 100;
 }
 
 .brand-pill {
@@ -249,6 +257,33 @@ html, body {
   background: var(--accent-light);
   color: var(--accent-primary);
   border: 1px solid var(--accent-primary);
+}
+
+/* Nav Sections Links */
+.nav-sections {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-pill);
+  padding: 3px 6px;
+}
+
+.nav-pill {
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  transition: var(--transition-fast);
+}
+
+.nav-pill:hover,
+.nav-pill.active {
+  color: var(--text-primary);
+  background: var(--card-bg-hover);
 }
 
 .nav-controls {
@@ -342,7 +377,7 @@ html, body {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--radius-xl);
-  padding: 28px;
+  padding: 26px 28px;
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
   box-shadow: 0 10px 35px -5px rgba(0, 0, 0, 0.35);
@@ -403,7 +438,7 @@ html, body {
 }
 
 /* --------------------------------------------------------------------------
-   1. Hero Card (Identity & Greeting)
+   1. Hero Card (Identity & Greeting & Avatar)
    -------------------------------------------------------------------------- */
 .hero-card {
   grid-column: span 7;
@@ -464,7 +499,65 @@ html, body {
 }
 
 .name-display-container {
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+}
+
+.avatar-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 8px;
+}
+
+.profile-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 24px var(--accent-glow);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+  animation: pulseAvatar 3s infinite ease-in-out;
+}
+
+@keyframes pulseAvatar {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 20px var(--accent-glow); }
+  50% { transform: scale(1.05); box-shadow: 0 0 30px var(--accent-glow); }
+}
+
+.avatar-initials {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.name-info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.dept-specialty-pill {
+  font-size: 0.78rem;
+  color: var(--accent-primary);
+  background: var(--accent-light);
+  border: 1px solid var(--accent-primary);
+  padding: 3px 12px;
+  border-radius: var(--radius-pill);
+  display: inline-block;
+  width: fit-content;
+  font-weight: 600;
+  outline: none;
+  cursor: text;
+}
+
+.dept-specialty-pill:focus {
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .welcome-heading {
@@ -538,11 +631,11 @@ html, body {
 }
 
 .tagline {
-  font-size: 1rem;
+  font-size: 0.96rem;
   color: var(--text-secondary);
-  max-width: 580px;
-  margin-bottom: 24px;
-  line-height: 1.6;
+  max-width: 620px;
+  margin-bottom: 20px;
+  line-height: 1.65;
   outline: none;
   cursor: text;
   padding: 4px 6px;
@@ -564,7 +657,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 18px;
+  padding: 12px 18px;
   background: rgba(0, 0, 0, 0.22);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: var(--radius-lg);
@@ -899,6 +992,7 @@ html, body {
   cursor: pointer;
   transition: var(--transition-fast);
   border: none;
+  text-decoration: none;
 }
 
 .btn-primary {
@@ -971,6 +1065,345 @@ html, body {
 }
 
 /* --------------------------------------------------------------------------
+   PROFILE & ABOUT SECTION (Requirement 1)
+   -------------------------------------------------------------------------- */
+.profile-overview-card {
+  grid-column: span 12;
+}
+
+.profile-details-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 28px;
+  align-items: center;
+}
+
+.profile-name-title {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.profile-meta-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.meta-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--card-border);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+}
+
+.profile-intro-text {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+.profile-intro-text strong {
+  color: var(--text-primary);
+}
+
+.profile-col-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stat-mini-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  padding: 12px 18px;
+  text-align: center;
+  transition: var(--transition-fast);
+}
+
+.stat-mini-box:hover {
+  border-color: var(--accent-primary);
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-2px);
+}
+
+.stat-number {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.35rem;
+  color: var(--accent-primary);
+}
+
+.stat-desc {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   SKILLS SECTION (Requirement 2: 至少 3 項技能)
+   -------------------------------------------------------------------------- */
+.skills-card {
+  grid-column: span 12;
+}
+
+.skills-showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.skill-tile {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  transition: var(--transition-fast);
+}
+
+.skill-tile:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--card-border-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px -6px var(--accent-glow);
+}
+
+.skill-tile-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.skill-icon {
+  font-size: 2rem;
+}
+
+.skill-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.skill-level {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+}
+
+.skill-desc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.skill-tags span {
+  font-size: 0.68rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+/* --------------------------------------------------------------------------
+   PROJECTS SECTION (Requirement 3: 用現在這個來撰寫)
+   -------------------------------------------------------------------------- */
+.project-hero-card {
+  grid-column: span 12;
+  border-color: rgba(52, 211, 153, 0.35);
+  background: linear-gradient(180deg, rgba(16, 22, 36, 0.85) 0%, rgba(10, 14, 24, 0.95) 100%);
+  padding: 34px;
+}
+
+.project-content-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 36px;
+  align-items: center;
+}
+
+.project-badge-pill {
+  display: inline-block;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--accent-primary);
+  background: var(--accent-light);
+  border: 1px solid var(--accent-primary);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 12px;
+}
+
+.project-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 2.6vw, 2.4rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.project-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 18px;
+}
+
+.desc-heading {
+  font-size: 0.8rem;
+  font-family: var(--font-display);
+  letter-spacing: 0.08em;
+  color: var(--accent-primary);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.project-desc-block {
+  margin-bottom: 20px;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.project-desc-block p {
+  margin-bottom: 8px;
+}
+
+.project-desc-block strong {
+  color: var(--text-primary);
+}
+
+.project-tech-block {
+  margin-bottom: 26px;
+}
+
+.tech-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tech-tag {
+  font-size: 0.76rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  transition: var(--transition-fast);
+}
+
+.tech-tag:hover {
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+  background: var(--accent-light);
+}
+
+.tech-tag strong {
+  color: var(--text-primary);
+}
+
+.project-actions-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btn-large {
+  padding: 12px 22px;
+  font-size: 0.92rem;
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Browser Frame Preview */
+.preview-browser-frame {
+  background: rgba(10, 12, 18, 0.9);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.7), 0 0 30px -5px var(--accent-glow);
+  transition: transform var(--transition-normal);
+}
+
+.preview-browser-frame:hover {
+  transform: scale(1.02);
+}
+
+.browser-header-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.browser-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.dot.red { background: #ef4444; }
+.dot.yellow { background: #f59e0b; }
+.dot.green { background: #10b981; }
+
+.browser-url-bar {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.4);
+  padding: 3px 12px;
+  border-radius: var(--radius-pill);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.browser-image-wrapper {
+  overflow: hidden;
+  display: flex;
+  background: #090b10;
+}
+
+.project-screenshot-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.preview-browser-frame:hover .project-screenshot-img {
+  transform: scale(1.03);
+}
+
+/* --------------------------------------------------------------------------
    6. Quick Launch Dock
    -------------------------------------------------------------------------- */
 .quicklinks-card {
@@ -979,7 +1412,7 @@ html, body {
 
 .quicklinks-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 14px;
 }
 
@@ -1076,6 +1509,12 @@ html, body {
   .quote-card {
     grid-column: span 12;
   }
+  .project-content-layout {
+    grid-template-columns: 1fr;
+  }
+  .profile-details-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 680px) {
@@ -1087,7 +1526,10 @@ html, body {
   .world-clocks-card,
   .timer-card,
   .quote-card,
-  .quicklinks-card {
+  .quicklinks-card,
+  .skills-card,
+  .profile-overview-card,
+  .project-hero-card {
     grid-column: span 12;
   }
 
@@ -1095,6 +1537,12 @@ html, body {
     flex-direction: column;
     gap: 12px;
     border-radius: var(--radius-lg);
+    position: static;
+  }
+
+  .nav-sections {
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .time-digits {
