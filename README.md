@@ -5,6 +5,10 @@ An ambient, glassmorphic personal dashboard featuring a high-precision digital c
 ## 🔗 Live Demo
 Explore the live dashboard here: **[https://raywu576.github.io/916/](https://raywu576.github.io/916/)**
 
+<p align="center">
+  <img src="screenshot.png" alt="Personal Dashboard Preview" width="100%" />
+</p>
+
 ---
 
 ## ✨ Features

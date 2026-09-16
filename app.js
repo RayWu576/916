@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let is24HourFormat = localStorage.getItem(STORAGE_KEYS.IS_24H) !== 'false'; // default true
   let currentStatusIndex = parseInt(localStorage.getItem(STORAGE_KEYS.STATUS_INDEX) || '0', 10);
-  let savedName = localStorage.getItem(STORAGE_KEYS.NAME) || 'Alex Morgan';
+  let savedName = localStorage.getItem(STORAGE_KEYS.NAME) || 'RAYWU';
   let savedTagline = localStorage.getItem(STORAGE_KEYS.TAGLINE) || 'Welcome back to your workspace. Make every moment count today.';
   let savedTheme = localStorage.getItem(STORAGE_KEYS.THEME) || 'aurora';
 
